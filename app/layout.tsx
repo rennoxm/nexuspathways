@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "Nexus Pathways — Trusted Opportunities for African Youth",
+  title: "Nexus Pathways | Trusted Opportunities for African Youth",
   description:
     "Nexus Pathways matches skilled and unskilled African youth with trusted opportunities in scholarships, jobs, fellowships, grants, internships, and volunteering.",
 };
@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.variable}>
+      <body className={`${inter.variable} font-sans`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

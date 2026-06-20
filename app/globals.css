@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
@@ -12,7 +11,6 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
@@ -20,65 +18,89 @@
   --color-ring: var(--ring);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
   --color-destructive: var(--destructive);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
   --font-sans: "Inter", system-ui, sans-serif;
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
 }
 
-/* ─── Dark theme (default) ─── */
-:root {
-  --background: #070F1A;
-  --surface: #0D1F35;
-  --foreground: #E8F4FF;
-  --muted: #8BAABB;
-  --muted-foreground: #6A8A9A;
+/*
+  ─────────────────────────────────────────
+  DARK THEME — default + when .dark is set
+  We use :root AND .dark so our values win
+  over shadcn/tailwind.css's .dark block
+  ─────────────────────────────────────────
+*/
+:root,
+.dark {
+  --background: #06101C;
+  --surface: #0C1E33;
+  --foreground: #DFF0FF;
 
   --primary: #00C9B1;
-  --primary-foreground: #070F1A;
+  --primary-foreground: #06101C;
+
   --accent: #3B82F6;
   --accent-foreground: #ffffff;
 
-  --card: #0D1F35;
-  --card-foreground: #E8F4FF;
-  --popover: #0D1F35;
-  --popover-foreground: #E8F4FF;
-  --secondary: #132A42;
-  --secondary-foreground: #E8F4FF;
+  --muted: #1A3450;
+  --muted-foreground: #7AA5C0;
 
-  --border: rgba(0, 201, 177, 0.15);
-  --input: rgba(0, 201, 177, 0.1);
-  --ring: rgba(0, 201, 177, 0.4);
+  --card: #0C1E33;
+  --card-foreground: #DFF0FF;
+  --popover: #0C1E33;
+  --popover-foreground: #DFF0FF;
+  --secondary: #112840;
+  --secondary-foreground: #DFF0FF;
+
+  --border: rgba(0, 201, 177, 0.18);
+  --input: rgba(0, 201, 177, 0.12);
+  --ring: rgba(0, 201, 177, 0.5);
   --destructive: #ef4444;
-
   --radius: 0.75rem;
+
+  /* sidebar tokens shadcn expects */
+  --sidebar: #0C1E33;
+  --sidebar-foreground: #DFF0FF;
+  --sidebar-primary: #00C9B1;
+  --sidebar-primary-foreground: #06101C;
+  --sidebar-accent: #112840;
+  --sidebar-accent-foreground: #DFF0FF;
+  --sidebar-border: rgba(0, 201, 177, 0.18);
+  --sidebar-ring: rgba(0, 201, 177, 0.5);
 }
 
-/* ─── Light theme ─── */
+/*
+  ─────────────────────────────────────────
+  LIGHT THEME — when .light class is set
+  ─────────────────────────────────────────
+*/
 .light {
-  --background: #F0F9FF;
+  --background: #EFF8FF;
   --surface: #FFFFFF;
   --foreground: #0A1929;
-  --muted: #4A6A7A;
-  --muted-foreground: #6A8A9A;
 
   --primary: #007A8A;
   --primary-foreground: #ffffff;
+
   --accent: #2563EB;
   --accent-foreground: #ffffff;
+
+  --muted: #E0F0F7;
+  --muted-foreground: #3D6B80;
 
   --card: #FFFFFF;
   --card-foreground: #0A1929;
   --popover: #FFFFFF;
   --popover-foreground: #0A1929;
-  --secondary: #E0F2F7;
+  --secondary: #D0EBF5;
   --secondary-foreground: #0A1929;
 
   --border: rgba(0, 122, 138, 0.2);
@@ -86,74 +108,83 @@
   --ring: rgba(0, 122, 138, 0.4);
   --destructive: #dc2626;
 
-  --radius: 0.75rem;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #0A1929;
+  --sidebar-primary: #007A8A;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #D0EBF5;
+  --sidebar-accent-foreground: #0A1929;
+  --sidebar-border: rgba(0, 122, 138, 0.2);
+  --sidebar-ring: rgba(0, 122, 138, 0.4);
 }
 
+/* ─── Base ─── */
 @layer base {
   * {
-    @apply border-border outline-ring/50 box-border;
+    @apply box-border border-border outline-ring/50;
   }
   html {
-    @apply font-sans antialiased scroll-smooth;
+    @apply scroll-smooth;
+    font-family: "Inter", system-ui, sans-serif;
   }
   body {
-    @apply bg-background text-foreground min-h-screen;
+    background-color: var(--background);
+    color: var(--foreground);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
-/* ─── Utility classes ─── */
+/* ─── Custom utilities ─── */
 @layer utilities {
-  .text-primary {
-    color: var(--primary);
-  }
-  .bg-primary {
+  /* Button — filled teal */
+  .btn-primary {
     background-color: var(--primary);
+    color: var(--primary-foreground);
+    font-weight: 600;
+    transition: filter 0.15s ease, transform 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
-  .border-primary {
-    border-color: var(--primary);
+  .btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
   }
-  .bg-surface {
-    background-color: var(--surface);
-  }
-  .text-muted {
-    color: var(--muted);
+  .btn-primary:active {
+    transform: translateY(0);
   }
 
-  /* Card hover glow */
+  /* Button — ghost outline */
+  .btn-outline {
+    border: 1.5px solid var(--border);
+    color: var(--foreground);
+    font-weight: 600;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-outline:hover {
+    border-color: var(--primary);
+    background-color: rgba(0, 201, 177, 0.07);
+    color: var(--primary);
+  }
+
+  /* Card hover */
   .card-hover {
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
   .card-hover:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 32px rgba(0, 201, 177, 0.12);
-    border-color: rgba(0, 201, 177, 0.4);
-  }
-  .light .card-hover:hover {
-    box-shadow: 0 8px 32px rgba(0, 122, 138, 0.12);
-    border-color: rgba(0, 122, 138, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 201, 177, 0.15);
+    border-color: rgba(0, 201, 177, 0.45);
   }
 
-  /* Subtle glow on buttons */
-  .btn-primary {
-    background-color: var(--primary);
-    color: var(--primary-foreground);
-    transition: opacity 0.15s ease, transform 0.15s ease;
-  }
-  .btn-primary:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-
-  .btn-outline {
-    border: 1px solid var(--border);
-    color: var(--foreground);
-    transition: border-color 0.15s ease, background-color 0.15s ease;
-  }
-  .btn-outline:hover {
-    border-color: var(--primary);
-    background-color: rgba(0, 201, 177, 0.06);
-  }
-  .light .btn-outline:hover {
-    background-color: rgba(0, 122, 138, 0.06);
-  }
+  /* Teal text + bg helpers */
+  .text-primary { color: var(--primary); }
+  .bg-primary { background-color: var(--primary); }
+  .bg-surface { background-color: var(--surface); }
+  .text-muted { color: var(--muted-foreground); }
+  .border-primary { border-color: var(--primary); }
 }
