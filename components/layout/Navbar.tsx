@@ -20,8 +20,8 @@ export function Navbar() {
     <header
       className="sticky top-0 z-50 w-full backdrop-blur-md"
       style={{
-        background: "rgba(6,16,28,0.85)",
-        borderBottom: "1px solid rgba(0,201,177,0.15)",
+        background: "var(--navbar-bg)",
+        borderBottom: "1px solid var(--border)",
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -32,7 +32,7 @@ export function Navbar() {
             className="w-8 h-8 rounded-lg flex items-center justify-center"
             style={{ backgroundColor: "var(--primary)" }}
           >
-            <span className="font-black text-sm tracking-tight leading-none" style={{ color: "#06101C" }}>
+            <span className="font-black text-sm tracking-tight leading-none" style={{ color: "var(--primary-foreground)" }}>
               NP
             </span>
           </div>
@@ -82,7 +82,7 @@ export function Navbar() {
             onClick={() => setMenuOpen(!menuOpen)}
             className="w-9 h-9 flex items-center justify-center rounded-lg transition-colors"
             style={{
-              border: "1px solid rgba(0,201,177,0.2)",
+              border: "1px solid var(--border)",
               color: "var(--muted-foreground)",
             }}
             aria-label="Toggle menu"
@@ -96,7 +96,7 @@ export function Navbar() {
       {menuOpen && (
         <div
           className="md:hidden px-4 pb-4 pt-3 flex flex-col gap-3"
-          style={{ borderTop: "1px solid rgba(0,201,177,0.12)", background: "var(--surface)" }}
+          style={{ borderTop: "1px solid var(--border)", background: "var(--surface)" }}
         >
           {navLinks.map((link) => (
             <Link
@@ -109,11 +109,11 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
-          <div className="flex gap-3 pt-2" style={{ borderTop: "1px solid rgba(0,201,177,0.12)" }}>
+          <div className="flex gap-3 pt-2" style={{ borderTop: "1px solid var(--border)" }}>
             <Link
               href="/auth/login"
               className="text-sm font-medium flex-1 text-center py-2 rounded-lg border"
-              style={{ color: "var(--muted-foreground)", borderColor: "rgba(0,201,177,0.2)" }}
+              style={{ color: "var(--muted-foreground)", borderColor: "var(--border)" }}
             >
               Sign In
             </Link>

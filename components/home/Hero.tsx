@@ -80,29 +80,29 @@ export function Hero() {
               className="object-cover object-top"
               priority
             />
-            {/* Dark overlay so the card below is readable */}
-            <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(6,16,28,0.85) 0%, transparent 50%)" }} />
+            {/* Stronger gradient at the bottom so the card text is always readable */}
+            <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(4,12,24,0.92) 0%, rgba(4,12,24,0.4) 45%, transparent 70%)" }} />
 
-            {/* Floating info card */}
+            {/* Floating info card — always dark bg, so use explicit white text */}
             <div
               className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-4 py-3 rounded-xl"
               style={{
-                background: "rgba(6,16,28,0.75)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(0,201,177,0.2)",
+                background: "rgba(4, 12, 24, 0.82)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(0,201,177,0.25)",
               }}
             >
               <div>
-                <p className="text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>
+                <p className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.55)" }}>
                   Updated weekly
                 </p>
-                <p className="text-sm font-semibold" style={{ color: "var(--foreground)" }}>
+                <p className="text-sm font-bold" style={{ color: "#ffffff" }}>
                   13 new listings this week
                 </p>
               </div>
               <Link
                 href="/opportunities"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold shrink-0 ml-4"
                 style={{ color: "var(--primary)" }}
               >
                 Browse all <ArrowRight size={12} />

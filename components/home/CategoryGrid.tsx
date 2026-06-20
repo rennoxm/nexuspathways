@@ -19,19 +19,19 @@ const iconMap: Record<string, React.ElementType> = {
   Heart,
 };
 
-// Each category gets a distinct accent tint so the grid isn't monotone
-const categoryAccents: Record<string, { bg: string; border: string; text: string }> = {
-  "Scholarship":          { bg: "rgba(59,130,246,0.1)",  border: "rgba(59,130,246,0.25)",  text: "#60A5FA" },
-  "Entry-Level Job":      { bg: "rgba(0,201,177,0.1)",   border: "rgba(0,201,177,0.25)",   text: "#00C9B1" },
-  "Cohort Training":      { bg: "rgba(168,85,247,0.1)",  border: "rgba(168,85,247,0.25)",  text: "#C084FC" },
-  "Grant & Funding":      { bg: "rgba(245,158,11,0.1)",  border: "rgba(245,158,11,0.25)",  text: "#FCD34D" },
-  "Fellowship":           { bg: "rgba(239,68,68,0.1)",   border: "rgba(239,68,68,0.25)",   text: "#FCA5A5" },
-  "Volunteer & Internship": { bg: "rgba(34,197,94,0.1)", border: "rgba(34,197,94,0.25)",   text: "#86EFAC" },
+// Map category label to the CSS var keys defined in globals.css
+const catVarKey: Record<string, string> = {
+  "Scholarship":            "scholarship",
+  "Entry-Level Job":        "job",
+  "Cohort Training":        "training",
+  "Grant & Funding":        "grant",
+  "Fellowship":             "fellowship",
+  "Volunteer & Internship": "volunteer",
 };
 
 export function CategoryGrid() {
   return (
-    <section className="w-full py-16" style={{ borderTop: "1px solid rgba(0,201,177,0.1)" }}>
+    <section className="w-full py-16" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
@@ -56,7 +56,7 @@ export function CategoryGrid() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {categoryMeta.map((cat) => {
             const Icon = iconMap[cat.icon];
-            const accent = categoryAccents[cat.label] ?? categoryAccents["Entry-Level Job"];
+            const key = catVarKey[cat.label] ?? "job";
             const href = `/opportunities?category=${encodeURIComponent(cat.label)}`;
 
             return (
@@ -66,22 +66,25 @@ export function CategoryGrid() {
                 className="group flex flex-col gap-4 p-6 rounded-2xl card-hover"
                 style={{
                   background: "var(--surface)",
-                  border: "1px solid rgba(0,201,177,0.15)",
+                  border: "1px solid var(--border)",
                 }}
               >
                 {/* Icon + count row */}
                 <div className="flex items-start justify-between">
                   <div
                     className="w-11 h-11 rounded-xl flex items-center justify-center"
-                    style={{ background: accent.bg, border: `1px solid ${accent.border}` }}
+                    style={{
+                      background: `var(--cat-${key}-bg)`,
+                      border: `1px solid var(--cat-${key}-border)`,
+                    }}
                   >
-                    <Icon size={20} style={{ color: accent.text }} />
+                    <Icon size={20} style={{ color: `var(--cat-${key})` }} />
                   </div>
                   <span
                     className="text-xs font-semibold px-2.5 py-1 rounded-full"
                     style={{
-                      background: "rgba(0,201,177,0.08)",
-                      border: "1px solid rgba(0,201,177,0.18)",
+                      background: "var(--cat-job-bg)",
+                      border: "1px solid var(--border)",
                       color: "var(--primary)",
                     }}
                   >
@@ -104,8 +107,8 @@ export function CategoryGrid() {
 
                 {/* Arrow */}
                 <div
-                  className="flex items-center gap-1 text-xs font-semibold mt-auto transition-colors"
-                  style={{ color: accent.text }}
+                  className="flex items-center gap-1 text-xs font-semibold mt-auto"
+                  style={{ color: `var(--cat-${key})` }}
                 >
                   Explore
                   <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
