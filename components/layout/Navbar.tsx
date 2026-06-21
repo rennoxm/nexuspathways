@@ -74,7 +74,7 @@ export function Navbar() {
             href="/onboard/youth"
             className="btn-primary text-sm px-4 py-2 rounded-lg"
           >
-            Join Free
+            Get Started
           </Link>
         </div>
 
@@ -128,7 +128,7 @@ export function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="btn-primary text-sm flex-1 text-center py-2 rounded-lg"
             >
-              Join Free
+              Get Started
             </Link>
           </div>
         </div>

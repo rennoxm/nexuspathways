@@ -146,8 +146,8 @@ export default function AboutPage() {
               <Link href="/opportunities" className="btn-outline text-sm font-semibold px-5 py-2.5 rounded-lg">
                 Browse Opportunities
               </Link>
-              <Link href="/auth/signup" className="btn-primary text-sm font-semibold px-5 py-2.5 rounded-lg">
-                Join Free
+              <Link href="/onboard/youth" className="btn-primary text-sm font-semibold px-5 py-2.5 rounded-lg">
+                Get Started
               </Link>
             </div>
           </div>

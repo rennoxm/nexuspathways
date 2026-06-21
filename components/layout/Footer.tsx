@@ -12,13 +12,8 @@ const footerLinks = {
   ],
   Company: [
     { label: "About Us", href: "/about" },
-    { label: "Partner With Us", href: "/partner" },
-    { label: "Join the Community", href: "/auth/signup" },
-  ],
-  Legal: [
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Terms of Use", href: "/terms" },
-  ],
+    { label: "Partner With Us", href: "/partner" }
+  ]
 };
 
 export function Footer() {
@@ -45,8 +40,8 @@ export function Footer() {
             </div>
             <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
               <Mail size={13} />
-              <a href="mailto:hello@nexuspathways.org" className="hover:text-primary transition-colors">
-                hello@nexuspathways.org
+              <a href="mailto:info@nexuspathways.io" className="hover:text-primary transition-colors">
+                info@nexuspathways.io
               </a>
             </div>
           </div>
@@ -76,14 +71,14 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Nexus Pathways. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground flex items-center gap-1">
-            Built to advance{" "}
+            Built by{" "}
             <a
-              href="https://sdgs.un.org"
+              href="https://jumaportfolio.netlify.app/.com/FredJuma"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline inline-flex items-center gap-0.5"
             >
-              UN SDG Goals <ExternalLink size={10} />
+              Fred Juma <ExternalLink size={10} />
             </a>
           </p>
         </div>

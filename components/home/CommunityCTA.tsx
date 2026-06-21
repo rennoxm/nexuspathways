@@ -53,10 +53,10 @@ export function CommunityCTA() {
 
             <div className="flex items-center gap-4 pt-1">
               <Link
-                href="/auth/signup"
+                href="/onboard/youth"
                 className="btn-primary inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-xl"
               >
-                Join Free <ArrowRight size={14} />
+                Get Started <ArrowRight size={14} />
               </Link>
               <Link
                 href="/opportunities"
