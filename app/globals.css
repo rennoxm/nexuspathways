@@ -238,3 +238,106 @@
   .text-muted { color: var(--muted-foreground); }
   .border-primary { border-color: var(--primary); }
 }
+
+/* ─── Animation keyframes ─────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+  @keyframes slideLeft {
+    from { opacity: 0; transform: translateX(-32px); }
+    to   { opacity: 1; transform: translateX(0);     }
+  }
+  @keyframes slideRight {
+    from { opacity: 0; transform: translateX(32px); }
+    to   { opacity: 1; transform: translateX(0);    }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1);    }
+  }
+  @keyframes iconPop {
+    0%   { transform: scale(0.75); }
+    65%  { transform: scale(1.12); }
+    100% { transform: scale(1);    }
+  }
+  @keyframes heroBreathe {
+    from { transform: scale(1.04); opacity: 0.85; }
+    to   { transform: scale(1);    opacity: 1;    }
+  }
+  @keyframes floatUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position:  200% center; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── Base animation classes (initial hidden state) ── */
+  .anim-slide-up,
+  .anim-slide-left,
+  .anim-slide-right,
+  .anim-scale-in,
+  .anim-fade-in {
+    opacity: 0;
+  }
+
+  /* ── inView triggers ── */
+  .inview.anim-slide-up   { animation: slideUp  0.65s cubic-bezier(0.22,1,0.36,1) forwards; }
+  .inview.anim-slide-left { animation: slideLeft 0.65s cubic-bezier(0.22,1,0.36,1) forwards; }
+  .inview.anim-slide-right{ animation: slideRight 0.65s cubic-bezier(0.22,1,0.36,1) forwards; }
+  .inview.anim-scale-in   { animation: scaleIn  0.55s cubic-bezier(0.22,1,0.36,1) forwards; }
+  .inview.anim-fade-in    { animation: fadeIn   0.5s ease forwards; }
+
+  /* icon pop fires when parent gets inview */
+  .inview .anim-icon-pop  { animation: iconPop 0.55s cubic-bezier(0.34,1.56,0.64,1) 0.25s forwards; }
+  .anim-icon-pop { transform: scale(0.75); }
+
+  /* hero-specific */
+  .anim-hero-breathe { animation: heroBreathe 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
+  .anim-float-up     { animation: floatUp 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.6s both; }
+
+  /* Stagger delay helpers */
+  .delay-0   { animation-delay:   0ms; }
+  .delay-1   { animation-delay:  60ms; }
+  .delay-2   { animation-delay: 120ms; }
+  .delay-3   { animation-delay: 180ms; }
+  .delay-4   { animation-delay: 240ms; }
+  .delay-5   { animation-delay: 300ms; }
+  .delay-6   { animation-delay: 360ms; }
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+  .delay-600 { animation-delay: 600ms; }
+  .delay-700 { animation-delay: 700ms; }
+
+  /* Shimmer CTA overlay */
+  .btn-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255,255,255,0.18) 50%,
+      transparent 60%
+    );
+    background-size: 200% 100%;
+    background-position: 200% center;
+  }
+  .btn-shimmer:hover::after {
+    animation: shimmer 0.65s ease forwards;
+  }
+}

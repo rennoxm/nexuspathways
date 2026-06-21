@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   GraduationCap,
@@ -9,6 +11,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { categoryMeta } from "@/lib/data/opportunities";
+import { useInView } from "@/hooks/useInView";
 
 const iconMap: Record<string, React.ElementType> = {
   GraduationCap,
@@ -19,7 +22,6 @@ const iconMap: Record<string, React.ElementType> = {
   Heart,
 };
 
-// Map category label to the CSS var keys defined in globals.css
 const catVarKey: Record<string, string> = {
   "Scholarship":            "scholarship",
   "Entry-Level Job":        "job",
@@ -29,12 +31,21 @@ const catVarKey: Record<string, string> = {
   "Volunteer & Internship": "volunteer",
 };
 
+const staggerDelays = [0, 60, 120, 180, 240, 300];
+
 export function CategoryGrid() {
+  const { ref: headerRef, inView: headerIn } = useInView(0.2);
+  const { ref: gridRef, inView: gridIn } = useInView(0.1);
+
   return (
     <section className="w-full py-16" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+        <div
+          ref={headerRef as React.RefObject<HTMLDivElement>}
+          className={`flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 anim-slide-up ${headerIn ? "inview" : ""}`}
+        >
           <div className="flex flex-col gap-2">
             <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "var(--primary)" }}>
               Explore Categories
@@ -53,26 +64,31 @@ export function CategoryGrid() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {categoryMeta.map((cat) => {
+        <div
+          ref={gridRef as React.RefObject<HTMLDivElement>}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
+          {categoryMeta.map((cat, i) => {
             const Icon = iconMap[cat.icon];
             const key = catVarKey[cat.label] ?? "job";
             const href = `/opportunities?category=${encodeURIComponent(cat.label)}`;
+            const delay = staggerDelays[i] ?? 0;
 
             return (
               <Link
                 key={cat.label}
                 href={href}
-                className="group flex flex-col gap-4 p-6 rounded-2xl card-hover"
+                className={`group flex flex-col gap-4 p-6 rounded-2xl card-hover anim-slide-up ${gridIn ? "inview" : ""}`}
                 style={{
                   background: "var(--surface)",
                   border: "1px solid var(--border)",
+                  animationDelay: `${delay}ms`,
                 }}
               >
                 {/* Icon + count row */}
                 <div className="flex items-start justify-between">
                   <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center"
+                    className="anim-icon-pop w-11 h-11 rounded-xl flex items-center justify-center"
                     style={{
                       background: `var(--cat-${key}-bg)`,
                       border: `1px solid var(--cat-${key}-border)`,

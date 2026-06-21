@@ -1,6 +1,28 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { Search, ArrowRight, MapPin } from "lucide-react";
+import { Search, ArrowRight } from "lucide-react";
+import { useCountUp } from "@/hooks/useCountUp";
+
+// Individual animated stat — each gets its own scroll trigger + counter
+function AnimatedStat({ target, suffix = "", label }: { target: number; suffix?: string; label: string }) {
+  const { ref, count } = useCountUp({ target, duration: 1400 });
+
+  return (
+    <div ref={(el) => { (ref as React.MutableRefObject<Element | null>).current = el; }} className="flex flex-col gap-0.5">
+      <span
+        className="text-2xl font-bold tabular-nums"
+        style={{ color: "var(--primary)" }}
+      >
+        {count}{suffix}
+      </span>
+      <span className="text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>
+        {label}
+      </span>
+    </div>
+  );
+}
 
 export function Hero() {
   return (
@@ -10,17 +32,36 @@ export function Hero() {
 
           {/* ── Left: copy ── */}
           <div className="flex flex-col gap-7">
-            
-            {/* Headline */}
+
+            {/* Line 1 of headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold leading-[1.1] tracking-tight text-foreground">
-              Find your next{" "}
-              <span style={{ color: "var(--primary)" }}>opportunity.</span>
-              <br />
-              Build your future.
+              <span
+                className="block anim-slide-up delay-0"
+                style={{ animationFillMode: "both", animationDuration: "0.65s", animationTimingFunction: "cubic-bezier(0.22,1,0.36,1)", animationName: "slideUp" }}
+              >
+                Find your next{" "}
+                <span style={{ color: "var(--primary)" }}>opportunity.</span>
+              </span>
+              <span
+                className="block anim-slide-up"
+                style={{ animationFillMode: "both", animationDuration: "0.65s", animationDelay: "110ms", animationTimingFunction: "cubic-bezier(0.22,1,0.36,1)", animationName: "slideUp" }}
+              >
+                Build your future.
+              </span>
             </h1>
 
             {/* Sub */}
-            <p className="text-base sm:text-lg leading-relaxed max-w-md" style={{ color: "var(--muted-foreground)" }}>
+            <p
+              className="text-base sm:text-lg leading-relaxed max-w-md anim-slide-up"
+              style={{
+                color: "var(--muted-foreground)",
+                animationFillMode: "both",
+                animationDuration: "0.65s",
+                animationDelay: "220ms",
+                animationTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
+                animationName: "slideUp",
+              }}
+            >
               We match African youth with vetted scholarships, jobs, fellowships, grants, and training programmes — all in one place.
             </p>
 
@@ -28,8 +69,15 @@ export function Hero() {
             <form
               action="/opportunities"
               method="GET"
-              className="flex items-center gap-2 p-1.5 rounded-xl border bg-surface w-full max-w-[480px]"
-              style={{ borderColor: "rgba(0,201,177,0.25)" }}
+              className="flex items-center gap-2 p-1.5 rounded-xl border bg-surface w-full max-w-[480px] anim-slide-up"
+              style={{
+                borderColor: "rgba(0,201,177,0.25)",
+                animationFillMode: "both",
+                animationDuration: "0.65s",
+                animationDelay: "310ms",
+                animationTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
+                animationName: "slideUp",
+              }}
             >
               <div className="flex items-center gap-2.5 flex-1 px-2">
                 <Search size={15} style={{ color: "var(--muted-foreground)" }} className="shrink-0" />
@@ -43,34 +91,32 @@ export function Hero() {
               </div>
               <button
                 type="submit"
-                className="btn-primary text-sm px-5 py-2.5 rounded-lg shrink-0"
+                className="btn-primary btn-shimmer text-sm px-5 py-2.5 rounded-lg shrink-0"
               >
                 Search
               </button>
             </form>
 
-            {/* Stats */}
-            <div className="flex items-center gap-8 pt-1">
-              {[
-                { value: "500+", label: "Listings" },
-                { value: "40+", label: "Partner Orgs" },
-                { value: "6", label: "Categories" },
-              ].map((stat) => (
-                <div key={stat.label} className="flex flex-col gap-0.5">
-                  <span className="text-2xl font-bold" style={{ color: "var(--primary)" }}>
-                    {stat.value}
-                  </span>
-                  <span className="text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
+            {/* Stats — each runs its own counter */}
+            <div
+              className="flex items-center gap-8 pt-1 anim-slide-up"
+              style={{
+                animationFillMode: "both",
+                animationDuration: "0.55s",
+                animationDelay: "400ms",
+                animationTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
+                animationName: "slideUp",
+              }}
+            >
+              <AnimatedStat target={500} suffix="+" label="Listings" />
+              <AnimatedStat target={40} suffix="+" label="Partner Orgs" />
+              <AnimatedStat target={6} label="Categories" />
             </div>
           </div>
 
           {/* ── Right: image ── */}
           <div
-            className="relative w-full aspect-[4/5] max-h-[540px] rounded-2xl overflow-hidden"
+            className="relative w-full aspect-[4/5] max-h-[540px] rounded-2xl overflow-hidden anim-hero-breathe"
             style={{ border: "1px solid rgba(0,201,177,0.2)" }}
           >
             <Image
@@ -80,12 +126,12 @@ export function Hero() {
               className="object-cover object-top"
               priority
             />
-            {/* Stronger gradient at the bottom so the card text is always readable */}
+            {/* Gradient overlay */}
             <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(4,12,24,0.92) 0%, rgba(4,12,24,0.4) 45%, transparent 70%)" }} />
 
-            {/* Floating info card — always dark bg, so use explicit white text */}
+            {/* Floating card — springs up */}
             <div
-              className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-4 py-3 rounded-xl"
+              className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-4 py-3 rounded-xl anim-float-up"
               style={{
                 background: "rgba(4, 12, 24, 0.82)",
                 backdropFilter: "blur(10px)",

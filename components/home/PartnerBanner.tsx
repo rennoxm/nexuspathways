@@ -1,13 +1,25 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Building2, ArrowRight } from "lucide-react";
+import { useInView } from "@/hooks/useInView";
+
+const bullets = [
+  "List scholarships, jobs, internships, and grants",
+  "Reach a targeted, verified youth audience",
+  "Align with the UN SDG goals",
+];
 
 export function PartnerBanner() {
+  const { ref: cardRef, inView } = useInView(0.15);
+
   return (
     <section className="w-full py-16" style={{ borderTop: "1px solid rgba(0,201,177,0.1)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          className="relative overflow-hidden rounded-2xl"
+          ref={cardRef as React.RefObject<HTMLDivElement>}
+          className={`relative overflow-hidden rounded-2xl anim-scale-in ${inView ? "inview" : ""}`}
           style={{
             background: "var(--surface)",
             border: "1px solid rgba(0,201,177,0.2)",
@@ -22,9 +34,9 @@ export function PartnerBanner() {
                 fill
                 className="object-cover object-center"
               />
-              {/* Teal tint overlay instead of plain dark */}
+              {/* Teal tint overlay — animates to final opacity with the card */}
               <div
-                className="absolute inset-0"
+                className={`absolute inset-0 transition-opacity duration-700 ${inView ? "opacity-100" : "opacity-0"}`}
                 style={{ background: "linear-gradient(135deg, rgba(0,201,177,0.25) 0%, rgba(6,16,28,0.5) 100%)" }}
               />
             </div>
@@ -43,7 +55,7 @@ export function PartnerBanner() {
                   For Organisations
                 </p>
                 <h2 className="text-2xl sm:text-3xl font-bold tracking-tight leading-snug" style={{ color: "var(--foreground)" }}>
-                  Partner with us to reach Africa's youth.
+                  Partner with us to reach Africa&apos;s youth.
                 </h2>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
                   NGO, government body, or private company — list your opportunities and connect with motivated young people across the continent.
@@ -51,12 +63,15 @@ export function PartnerBanner() {
               </div>
 
               <ul className="flex flex-col gap-3">
-                {[
-                  "List scholarships, jobs, internships, and grants",
-                  "Reach a targeted, verified youth audience",
-                  "Align with the UN SDG goals",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm" style={{ color: "var(--muted-foreground)" }}>
+                {bullets.map((item, i) => (
+                  <li
+                    key={item}
+                    className={`flex items-start gap-3 text-sm anim-slide-up ${inView ? "inview" : ""}`}
+                    style={{
+                      color: "var(--muted-foreground)",
+                      animationDelay: `${250 + i * 80}ms`,
+                    }}
+                  >
                     <span
                       className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
                       style={{ backgroundColor: "var(--primary)" }}
@@ -69,7 +84,7 @@ export function PartnerBanner() {
               <div>
                 <Link
                   href="/partner"
-                  className="btn-primary inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-xl"
+                  className="btn-primary btn-shimmer inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-xl"
                 >
                   Partner With Us <ArrowRight size={14} />
                 </Link>
