@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { SignInModal } from "@/components/auth/SignInModal";
 
 const navLinks = [
   { label: "Opportunities", href: "/opportunities" },
@@ -15,9 +16,11 @@ const navLinks = [
 export function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [signInOpen, setSignInOpen] = useState(false);
 
   return (
-    <header
+    <>
+      <header
       className="sticky top-0 z-50 w-full backdrop-blur-md"
       style={{
         background: "var(--navbar-bg)",
@@ -60,13 +63,13 @@ export function Navbar() {
         {/* Right */}
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
-          <Link
-            href="/auth/login"
-            className="text-sm font-medium px-3 py-1.5 transition-colors"
+          <button
+            onClick={() => setSignInOpen(true)}
+            className="text-sm font-medium px-3 py-1.5 transition-colors cursor-pointer"
             style={{ color: "var(--muted-foreground)" }}
           >
             Sign In
-          </Link>
+          </button>
           <Link
             href="/onboard/youth"
             className="btn-primary text-sm px-4 py-2 rounded-lg"
@@ -110,15 +113,19 @@ export function Navbar() {
             </Link>
           ))}
           <div className="flex gap-3 pt-2" style={{ borderTop: "1px solid var(--border)" }}>
-            <Link
-              href="/auth/login"
-              className="text-sm font-medium flex-1 text-center py-2 rounded-lg border"
+            <button
+              onClick={() => {
+                setMenuOpen(false);
+                setSignInOpen(true);
+              }}
+              className="text-sm font-medium flex-1 text-center py-2 rounded-lg border cursor-pointer"
               style={{ color: "var(--muted-foreground)", borderColor: "var(--border)" }}
             >
               Sign In
-            </Link>
+            </button>
             <Link
-              href="/auth/signup"
+              href="/onboard/youth"
+              onClick={() => setMenuOpen(false)}
               className="btn-primary text-sm flex-1 text-center py-2 rounded-lg"
             >
               Join Free
@@ -126,6 +133,8 @@ export function Navbar() {
           </div>
         </div>
       )}
-    </header>
+      </header>
+      <SignInModal isOpen={signInOpen} onClose={() => setSignInOpen(false)} />
+    </>
   );
 }

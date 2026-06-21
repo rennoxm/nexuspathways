@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import Link from "next/link";
 import {
   LayoutDashboard,
   Search,
@@ -10,6 +11,7 @@ import {
   MessageCircle,
   Settings,
   UserCircle,
+  Globe,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
@@ -94,6 +96,14 @@ function DashboardInner() {
             <span style={{ color: "var(--primary)" }}>{name}</span>
           </p>
           <div className="flex items-center gap-3">
+            <Link
+              href="/"
+              className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-[rgba(0,201,177,0.08)]"
+              style={{ border: "1px solid var(--border)", color: "var(--muted-foreground)" }}
+              title="Back to Website"
+            >
+              <Globe size={15} />
+            </Link>
             <ThemeToggle />
             {/* Avatar */}
             <div
