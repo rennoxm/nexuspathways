@@ -68,7 +68,7 @@ export function Navbar() {
             Sign In
           </Link>
           <Link
-            href="/auth/signup"
+            href="/onboard/youth"
             className="btn-primary text-sm px-4 py-2 rounded-lg"
           >
             Join Free

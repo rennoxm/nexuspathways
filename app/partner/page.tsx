@@ -1,7 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { CheckCircle, Send } from "lucide-react";
+import { CheckCircle, ArrowRight } from "lucide-react";
 
 const benefits = [
   "List scholarships, jobs, fellowships, grants, internships, and trainings",
@@ -92,110 +93,33 @@ export default function PartnerPage() {
                 </div>
               </div>
 
-              {/* Interest form */}
-              <div className="flex flex-col gap-6 p-8 rounded-2xl border border-border bg-surface">
+              {/* CTA card — links to dedicated onboarding form */}
+              <div
+                className="flex flex-col gap-6 p-8 rounded-2xl"
+                style={{ background: "var(--surface)", border: "1px solid var(--border)" }}
+              >
                 <div className="flex flex-col gap-1">
-                  <h2 className="text-xl font-bold text-foreground">Express your interest</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Fill in your details and we'll be in touch within 2 working days.
+                  <h2 className="text-xl font-bold" style={{ color: "var(--foreground)" }}>
+                    Ready to partner?
+                  </h2>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
+                    Fill out the partner onboarding form to tell us about your organisation and the opportunities you&apos;d like to list. Our team will review your application within 5 business days.
                   </p>
                 </div>
-
-                <form className="flex flex-col gap-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-medium text-muted-foreground" htmlFor="firstName">
-                        First name
-                      </label>
-                      <input
-                        id="firstName"
-                        type="text"
-                        placeholder="Amara"
-                        className="px-3.5 py-2.5 rounded-lg border border-border bg-card text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-medium text-muted-foreground" htmlFor="lastName">
-                        Last name
-                      </label>
-                      <input
-                        id="lastName"
-                        type="text"
-                        placeholder="Nkrumah"
-                        className="px-3.5 py-2.5 rounded-lg border border-border bg-card text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-medium text-muted-foreground" htmlFor="email">
-                      Work email
-                    </label>
-                    <input
-                      id="email"
-                      type="email"
-                      placeholder="amara@yourorg.org"
-                      className="px-3.5 py-2.5 rounded-lg border border-border bg-card text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-medium text-muted-foreground" htmlFor="orgName">
-                      Organisation name
-                    </label>
-                    <input
-                      id="orgName"
-                      type="text"
-                      placeholder="Youth Forward Kenya"
-                      className="px-3.5 py-2.5 rounded-lg border border-border bg-card text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-medium text-muted-foreground" htmlFor="orgType">
-                      Organisation type
-                    </label>
-                    <select
-                      id="orgType"
-                      className="px-3.5 py-2.5 rounded-lg border border-border bg-card text-sm text-foreground outline-none focus:border-primary transition-colors cursor-pointer"
-                    >
-                      <option value="">Select type...</option>
-                      <option>Grassroots NGO</option>
-                      <option>Government Agency</option>
-                      <option>Private Company</option>
-                      <option>International Body</option>
-                      <option>Educational Institution</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-medium text-muted-foreground" htmlFor="message">
-                      Tell us about your opportunity (optional)
-                    </label>
-                    <textarea
-                      id="message"
-                      rows={3}
-                      placeholder="Briefly describe what you'd like to list on Nexus Pathways..."
-                      className="px-3.5 py-2.5 rounded-lg border border-border bg-card text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors resize-none"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="btn-primary inline-flex items-center justify-center gap-2 w-full text-sm font-semibold py-3 rounded-lg mt-1"
-                  >
-                    <Send size={14} />
-                    Send Interest
-                  </button>
-
-                  <p className="text-xs text-center text-muted-foreground">
-                    By submitting, you agree to our{" "}
-                    <a href="/terms" className="text-primary hover:underline">Terms of Use</a>{" "}
-                    and{" "}
-                    <a href="/privacy" className="text-primary hover:underline">Privacy Policy</a>.
-                  </p>
-                </form>
+                <ul className="flex flex-col gap-2">
+                  {["Takes less than 5 minutes", "Free for approved partners during MVP", "Go live within 48 hours of approval"].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm" style={{ color: "var(--muted-foreground)" }}>
+                      <CheckCircle size={14} style={{ color: "var(--primary)", flexShrink: 0 }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="/onboard/partner"
+                  className="btn-primary inline-flex items-center justify-center gap-2 w-full text-sm font-semibold py-3 rounded-xl"
+                >
+                  Start Partner Application <ArrowRight size={14} />
+                </Link>
               </div>
             </div>
           </div>
