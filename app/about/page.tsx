@@ -52,7 +52,7 @@ export default function AboutPage() {
                   Built for Africa's youth. By people who believe in them.
                 </h1>
                 <p className="text-base text-muted-foreground leading-relaxed">
-                  Nexus Pathways is an opportunity matching platform that connects skilled and unskilled African youth with trusted opportunities in financial literacy, entry-level jobs, career readiness, internships, volunteering, mental health, and nutrition.
+                  Nexus Pathways is an opportunity matching platform that connects skilled and unskilled African youth with trusted opportunities in financial literacy, entry-level jobs, career readiness, internships, and volunteering — all in one place.
                 </p>
               </div>
               <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-border">

@@ -16,17 +16,6 @@ import {
   FileText,
   Wallet,
   Rocket,
-  Utensils,
-  Scale,
-  Dumbbell,
-  ShieldCheck,
-  Lightbulb,
-  Wind,
-  Ban,
-  Heart,
-  Users,
-  DollarSign,
-  MessageCircle,
 } from "lucide-react";
 import { africanCountries, africanPhoneCodes } from "@/lib/data/african-countries";
 
@@ -34,8 +23,6 @@ import { africanCountries, africanPhoneCodes } from "@/lib/data/african-countrie
 
 const iconMap: Record<string, React.ElementType> = {
   PiggyBank, TrendingDown, TrendingUp, FileText, Wallet, Rocket,
-  Utensils, Scale, Dumbbell, ShieldCheck,
-  Lightbulb, Wind, Ban, Heart, Users, DollarSign, MessageCircle,
 };
 
 const pathways = [
@@ -51,33 +38,6 @@ const pathways = [
       { id: "taxes",        label: "Taxes, Legal & Compliance",        icon: "FileText" },
       { id: "crypto",       label: "Digital Banking & Crypto",         icon: "Wallet" },
       { id: "entrepreneur", label: "Entrepreneurship & Fundraising",   icon: "Rocket" },
-    ],
-  },
-  {
-    id: "nutrition",
-    title: "Fuel Your Glow",
-    subtitle: "Nutrition & Dietetics — Eat well, feel good, perform better",
-    varKey: "volunteer",
-    topics: [
-      { id: "meal",         label: "Meal Planning — Local & International", icon: "Utensils" },
-      { id: "dietetics",    label: "Dietetics & Weight Management",         icon: "Scale" },
-      { id: "sport",        label: "Sport Nutrition & Fitness",             icon: "Dumbbell" },
-      { id: "food-safety",  label: "Food Safety & Processing",              icon: "ShieldCheck" },
-    ],
-  },
-  {
-    id: "mental",
-    title: "Protect Your Peace",
-    subtitle: "Mental Health — Break bad habits, find balance, heal",
-    varKey: "training",
-    topics: [
-      { id: "mindfulness",     label: "Mindfulness & Emotional Intelligence",      icon: "Lightbulb" },
-      { id: "stress",          label: "Stress & Anger Management",                 icon: "Wind" },
-      { id: "substance",       label: "Substance Abuse & Addictions",              icon: "Ban" },
-      { id: "anxiety",         label: "Anxiety & Depression",                      icon: "Heart" },
-      { id: "peer-pressure",   label: "Peer Pressure & Social Comparison",         icon: "Users" },
-      { id: "financial-stress",label: "Financial Stress",                          icon: "DollarSign" },
-      { id: "safe-spaces",     label: "Safe Spaces — Heartbreak · Rejection · Relationships", icon: "MessageCircle" },
     ],
   },
 ];
@@ -331,7 +291,7 @@ export default function YouthOnboardPage() {
             <span style={{ color: "var(--primary)" }}>No Gatekeeping.</span>
           </h1>
           <p className="text-sm leading-relaxed max-w-lg mx-auto" style={{ color: "var(--muted-foreground)" }}>
-            Secure the bag, improve your glow, heal your wounds and traumas — all with one plug. Choose the pathways that match your needs.
+            Secure the bag — build wealth, manage debt, and understand your money. Choose the financial pathways that match your goals.
           </p>
         </div>
 

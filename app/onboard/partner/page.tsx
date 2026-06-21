@@ -7,8 +7,6 @@ import { Building2, ChevronRight, Check } from "lucide-react";
 
 const supportCategories = [
   "Financial Literacy",
-  "Mental Health",
-  "Nutrition & Dietetics",
   "Entry-Level Jobs",
   "Scholarships",
   "Fellowships",
