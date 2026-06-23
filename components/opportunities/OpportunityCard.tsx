@@ -1,9 +1,20 @@
+"use client";
+
 import { type Opportunity } from "@/lib/data/opportunities";
-import { Calendar, MapPin, ExternalLink } from "lucide-react";
+import { Calendar, MapPin, ExternalLink, Lock } from "lucide-react";
+import { useAuth } from "@/lib/auth";
 
 interface OpportunityCardProps {
   opportunity: Opportunity;
 }
+
+// Categories that require login to access the apply link
+const GATED_CATEGORIES = new Set([
+  "Scholarship",
+  "Cohort Training",
+  "Fellowship",
+  "Grant & Funding",
+]);
 
 // Maps category to the CSS var key defined in globals.css
 const catVarKey: Record<string, string> = {
@@ -31,6 +42,13 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
   const key = catVarKey[category] ?? "job";
   const days = daysLeft(deadline);
   const urgent = days <= 14 && days >= 0;
+  const { isLoggedIn } = useAuth();
+  const isGated = GATED_CATEGORIES.has(category);
+  const locked = isGated && !isLoggedIn;
+
+  function openSignIn() {
+    window.dispatchEvent(new CustomEvent("nexus:open-signin"));
+  }
 
   return (
     <div
@@ -112,16 +130,37 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
         </span>
       </div>
 
-      {/* CTA */}
-      <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="btn-primary inline-flex items-center justify-center gap-2 w-full text-sm py-2.5 rounded-xl mt-1"
-      >
-        View Opportunity
-        <ExternalLink size={13} />
-      </a>
+      {/* CTA — locked or open */}
+      {locked ? (
+        <div
+          className="flex flex-col items-center gap-2 w-full rounded-xl px-4 py-3 mt-1"
+          style={{
+            background: "var(--background)",
+            border: "1px dashed var(--border)",
+          }}
+        >
+          <div className="flex items-center gap-1.5 text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>
+            <Lock size={12} style={{ color: `var(--cat-${key})` }} />
+            Sign in to access this opportunity
+          </div>
+          <button
+            onClick={openSignIn}
+            className="btn-primary text-xs px-4 py-1.5 rounded-lg w-full"
+          >
+            Join Us to Unlock
+          </button>
+        </div>
+      ) : (
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary inline-flex items-center justify-center gap-2 w-full text-sm py-2.5 rounded-xl mt-1"
+        >
+          View Opportunity
+          <ExternalLink size={13} />
+        </a>
+      )}
     </div>
   );
 }

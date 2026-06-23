@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { X, User, Building2 } from "lucide-react";
+import { login } from "@/lib/auth";
 
 interface SignInModalProps {
   isOpen: boolean;
@@ -10,7 +10,6 @@ interface SignInModalProps {
 }
 
 export function SignInModal({ isOpen, onClose }: SignInModalProps) {
-  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"youth" | "partner">("youth");
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -29,20 +28,14 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
       return;
     }
 
-    // Extract display name or organization name from email/text
+    // Derive display name from input
     let nameVal = identifier.trim();
-    if (nameVal.includes("@")) {
-      nameVal = nameVal.split("@")[0];
-    }
-    // Capitalize first letter
+    if (nameVal.includes("@")) nameVal = nameVal.split("@")[0];
     nameVal = nameVal.charAt(0).toUpperCase() + nameVal.slice(1);
 
+    // Persist auth state globally — lock icons clear site-wide instantly
+    login(nameVal, activeTab);
     onClose();
-    if (activeTab === "youth") {
-      router.push(`/dashboard?name=${encodeURIComponent(nameVal)}`);
-    } else {
-      router.push(`/dashboard/partner?org=${encodeURIComponent(nameVal)}`);
-    }
   }
 
   const inputStyle = {

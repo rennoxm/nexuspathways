@@ -9,9 +9,18 @@ import {
   Award,
   Heart,
   ArrowRight,
+  Lock,
 } from "lucide-react";
 import { categoryMeta } from "@/lib/data/opportunities";
 import { useInView } from "@/hooks/useInView";
+import { useAuth } from "@/lib/auth";
+
+const GATED_CATEGORIES = new Set([
+  "Scholarship",
+  "Cohort Training",
+  "Fellowship",
+  "Grant & Funding",
+]);
 
 const iconMap: Record<string, React.ElementType> = {
   GraduationCap,
@@ -36,6 +45,7 @@ const staggerDelays = [0, 60, 120, 180, 240, 300];
 export function CategoryGrid() {
   const { ref: headerRef, inView: headerIn } = useInView(0.2);
   const { ref: gridRef, inView: gridIn } = useInView(0.1);
+  const { isLoggedIn } = useAuth();
 
   return (
     <section className="w-full py-16" style={{ borderTop: "1px solid var(--border)" }}>
@@ -74,6 +84,9 @@ export function CategoryGrid() {
             const href = `/opportunities?category=${encodeURIComponent(cat.label)}`;
             const delay = staggerDelays[i] ?? 0;
 
+            const isGated = GATED_CATEGORIES.has(cat.label);
+            const locked = isGated && !isLoggedIn;
+
             return (
               <Link
                 key={cat.label}
@@ -81,7 +94,9 @@ export function CategoryGrid() {
                 className={`group flex flex-col gap-4 p-6 rounded-2xl card-hover anim-slide-up ${gridIn ? "inview" : ""}`}
                 style={{
                   background: "var(--surface)",
-                  border: "1px solid var(--border)",
+                  border: locked
+                    ? "1px solid rgba(0,201,177,0.18)"
+                    : "1px solid var(--border)",
                   animationDelay: `${delay}ms`,
                 }}
               >
@@ -96,17 +111,33 @@ export function CategoryGrid() {
                   >
                     <Icon size={20} style={{ color: `var(--cat-${key})` }} />
                   </div>
-                  <span
-                    className="text-xs font-semibold px-2.5 py-1 rounded-full"
-                    style={{
-                      background: "var(--cat-job-bg)",
-                      border: "1px solid var(--border)",
-                      color: "var(--primary)",
-                    }}
-                  >
-                    {cat.count} open
-                  </span>
-                </div>
+                  {/* Count + optional lock badges */}
+                  <div className="flex items-center gap-1.5">
+                    {locked && (
+                      <span
+                        className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full"
+                        style={{
+                          background: "rgba(0,201,177,0.08)",
+                          border: "1px solid rgba(0,201,177,0.2)",
+                          color: "var(--primary)",
+                        }}
+                      >
+                        <Lock size={9} />
+                        Members only
+                      </span>
+                    )}
+                    <span
+                      className="text-xs font-semibold px-2.5 py-1 rounded-full"
+                      style={{
+                        background: "var(--cat-job-bg)",
+                        border: "1px solid var(--border)",
+                        color: "var(--primary)",
+                      }}
+                    >
+                      {cat.count} open
+                    </span>
+                  </div>{/* end badges wrapper */}
+                </div>{/* end icon row */}
 
                 {/* Text */}
                 <div className="flex flex-col gap-1.5">
