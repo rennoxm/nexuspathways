@@ -49,20 +49,23 @@ export function logout() {
 
 /** React hook — subscribes this component to auth state changes. */
 export function useAuth() {
-  const [state, setState] = useState<AuthState>(_state);
+  const [mounted, setMounted] = useState(false);
+  const [state, setState] = useState<AuthState>({ loggedIn: false, name: "", role: "" });
 
   useEffect(() => {
     // Sync with storage on first mount (handles page refresh)
     const stored = readStorage();
-    if (stored.loggedIn !== _state.loggedIn) {
-      _state = stored;
-    }
-    setState(_state);
+    _state = stored;
+    setState(stored);
+    setMounted(true);
 
     const update = () => setState({ ..._state });
     _subs.add(update);
     return () => { _subs.delete(update); };
   }, []);
+
+  // Before mount, always return logged-out so SSR and initial client render match
+  if (!mounted) return { isLoggedIn: false, name: "", role: "" as const };
 
   return {
     isLoggedIn: state.loggedIn,

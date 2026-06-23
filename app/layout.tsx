@@ -18,21 +18,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Theme init runs before paint — prevents flash without going through React render */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(){
-                try {
-                  var t = localStorage.getItem('theme') || 'dark';
-                  document.documentElement.classList.add(t);
-                } catch(e){}
-              })()
-            `,
-          }}
-        />
-      </head>
       <body className={`${inter.variable} font-sans`}>
         <ThemeProvider
           attribute="class"

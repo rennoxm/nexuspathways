@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { OpportunityCard } from "@/components/opportunities/OpportunityCard";
@@ -18,11 +20,19 @@ const categories: OpportunityCategory[] = [
 
 const workTypes: WorkType[] = ["Remote", "Hybrid", "Onsite"];
 
-export default function OpportunitiesPage() {
+function OpportunitiesInner() {
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<OpportunityCategory | "">("");
   const [selectedWorkType, setSelectedWorkType] = useState<WorkType | "">("");
   const [paidFilter, setPaidFilter] = useState<"all" | "paid" | "unpaid">("all");
+
+  // Seed search from Hero bar — reads ?q= on first mount
+  useEffect(() => {
+    const q = searchParams.get("q");
+    if (q) setSearchQuery(q);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filtered = useMemo(() => {
     return opportunities.filter((opp) => {
@@ -160,5 +170,13 @@ export default function OpportunitiesPage() {
       </main>
       <Footer />
     </div>
+  );
+}
+
+export default function OpportunitiesPage() {
+  return (
+    <Suspense>
+      <OpportunitiesInner />
+    </Suspense>
   );
 }
