@@ -100,6 +100,8 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
               onClick={() => {
                 setActiveTab("youth");
                 setError("");
+                setIdentifier("");
+                setPassword("");
               }}
               className="flex-1 py-2 px-3 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-200"
               style={{
@@ -114,6 +116,8 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
               onClick={() => {
                 setActiveTab("partner");
                 setError("");
+                setIdentifier("");
+                setPassword("");
               }}
               className="flex-1 py-2 px-3 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-200"
               style={{
@@ -128,7 +132,7 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="px-6 pb-8 space-y-4">
+        <form key={activeTab} onSubmit={handleSubmit} className="px-6 pb-8 space-y-4">
           <div>
             <label 
               className="block text-xs font-semibold uppercase tracking-wider mb-1.5"

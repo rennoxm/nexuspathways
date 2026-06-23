@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Building2, ChevronRight, Check } from "lucide-react";
+import { Building2, ChevronRight, Check, CheckCircle2 } from "lucide-react";
 
 const supportCategories = [
   "Financial Literacy",
@@ -47,7 +46,6 @@ function Field({ label, error, children }: { label: string; error?: string; chil
 }
 
 export default function PartnerOnboardPage() {
-  const router = useRouter();
   const [form, setForm] = useState<PartnerForm>({
     orgName: "",
     contactEmail: "",
@@ -57,6 +55,8 @@ export default function PartnerOnboardPage() {
     description: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitted, setSubmitted] = useState(false);
+  const [submittedOrg, setSubmittedOrg] = useState("");
 
   function update(field: keyof PartnerForm, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -87,8 +87,69 @@ export default function PartnerOnboardPage() {
 
   function handleSubmit() {
     if (validate()) {
-      router.push(`/dashboard/partner?org=${encodeURIComponent(form.orgName)}`);
+      setSubmittedOrg(form.orgName);
+      setSubmitted(true);
     }
+  }
+
+  // ─── Success screen ───────────────────────────────────────────────────
+
+  if (submitted) {
+    return (
+      <div
+        className="min-h-screen flex flex-col items-center justify-center px-6 text-center"
+        style={{ background: "var(--background)" }}
+      >
+        {/* Animated checkmark ring */}
+        <div className="relative mb-8">
+          <div
+            className="w-24 h-24 rounded-full flex items-center justify-center"
+            style={{
+              background: "rgba(0,201,177,0.1)",
+              border: "2px solid rgba(0,201,177,0.3)",
+              animation: "pulseRing 2s ease-out infinite",
+            }}
+          >
+            <CheckCircle2 size={44} style={{ color: "var(--primary)" }} />
+          </div>
+          {[["top-0 -right-2","#00C9B1"],["top-2 -left-4","#3B82F6"],["-bottom-1 right-4","#00C9B1"]].map(([pos, color], i) => (
+            <span
+              key={i}
+              className={`absolute ${pos} w-2.5 h-2.5 rounded-full`}
+              style={{ backgroundColor: color, animation: `confettiBurst 0.6s ${i * 100}ms cubic-bezier(0.34,1.56,0.64,1) both` }}
+            />
+          ))}
+        </div>
+
+        <h1 className="text-2xl sm:text-3xl font-extrabold mb-3" style={{ color: "var(--foreground)" }}>
+          Application{" "}
+          <span style={{ color: "var(--primary)" }}>received!</span>
+        </h1>
+
+        <p className="max-w-md text-base leading-relaxed mb-2" style={{ color: "var(--muted-foreground)" }}>
+          Thanks for submitting, <strong style={{ color: "var(--foreground)" }}>{submittedOrg}</strong>. Our partnerships team reviews applications within 5 business days and will be in touch via the email you provided.
+        </p>
+        <p className="max-w-sm text-sm leading-relaxed mb-10" style={{ color: "var(--muted-foreground)", opacity: 0.7 }}>
+          In the meantime, feel free to explore what Nexus Pathways offers.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-3 items-center">
+          <Link
+            href={`/dashboard/partner?org=${encodeURIComponent(submittedOrg)}`}
+            className="btn-primary btn-shimmer px-7 py-3 rounded-xl text-sm font-semibold"
+          >
+            Go to your Dashboard →
+          </Link>
+          <Link
+            href="/"
+            className="text-sm font-medium transition-colors"
+            style={{ color: "var(--muted-foreground)" }}
+          >
+            Back to Homepage
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (

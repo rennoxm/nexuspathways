@@ -100,6 +100,8 @@ export default function YouthOnboardPage() {
   const [tooOld, setTooOld] = useState(false);       // over-35
   const [isMinor, setIsMinor] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitted, setSubmitted] = useState(false);
+  const [submittedName, setSubmittedName] = useState("");
 
   const [form, setForm] = useState<FormData>({
     firstName: "",
@@ -192,7 +194,8 @@ export default function YouthOnboardPage() {
   }
 
   function handleSubmit() {
-    router.push(`/dashboard?name=${encodeURIComponent(form.firstName)}`);
+    setSubmittedName(form.firstName);
+    setSubmitted(true);
   }
 
   // ─── Under-15 block screen ────────────────────────────────────────────────
@@ -222,6 +225,66 @@ export default function YouthOnboardPage() {
     );
   }
 
+  // ─── Success screen ───────────────────────────────────────────────────────
+
+  if (submitted) {
+    return (
+      <div
+        className="min-h-screen flex flex-col items-center justify-center px-6 text-center"
+        style={{ background: "var(--background)" }}
+      >
+        {/* Animated checkmark ring */}
+        <div className="relative mb-8">
+          <div
+            className="w-24 h-24 rounded-full flex items-center justify-center"
+            style={{
+              background: "rgba(0,201,177,0.1)",
+              border: "2px solid rgba(0,201,177,0.3)",
+              animation: "pulseRing 2s ease-out infinite",
+            }}
+          >
+            <CheckCircle2 size={44} style={{ color: "var(--primary)" }} />
+          </div>
+          {/* Confetti dots */}
+          {[["top-0 -right-2","#00C9B1"],["top-2 -left-4","#3B82F6"],["-bottom-1 right-4","#00C9B1"],["-bottom-2 -left-2","#C084FC"],["top-6 right-8","#3B82F6"]].map(([pos, color], i) => (
+            <span
+              key={i}
+              className={`absolute ${pos} w-2.5 h-2.5 rounded-full`}
+              style={{ backgroundColor: color, animation: `confettiBurst 0.6s ${i * 80}ms cubic-bezier(0.34,1.56,0.64,1) both` }}
+            />
+          ))}
+        </div>
+
+        <h1 className="text-2xl sm:text-3xl font-extrabold mb-3" style={{ color: "var(--foreground)" }}>
+          You&apos;re in,{" "}
+          <span style={{ color: "var(--primary)" }}>{submittedName}! 🎉</span>
+        </h1>
+
+        <p className="max-w-md text-base leading-relaxed mb-2" style={{ color: "var(--muted-foreground)" }}>
+          Your application has been booked. Our team reviews submissions weekly — we&apos;ll reach out with your personalised matches soon.
+        </p>
+        <p className="max-w-sm text-sm leading-relaxed mb-10" style={{ color: "var(--muted-foreground)", opacity: 0.7 }}>
+          Keep an eye on your phone or email for next steps.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-3 items-center">
+          <Link
+            href={`/dashboard?name=${encodeURIComponent(submittedName)}`}
+            className="btn-primary btn-shimmer px-7 py-3 rounded-xl text-sm font-semibold"
+          >
+            Go to your Dashboard →
+          </Link>
+          <Link
+            href="/"
+            className="text-sm font-medium transition-colors"
+            style={{ color: "var(--muted-foreground)" }}
+          >
+            Back to Homepage
+          </Link>
+        </div>
+      </div>
+    );
+  }
   // ─── Over-35 block screen ─────────────────────────────────────────────────
 
   if (tooOld) {
