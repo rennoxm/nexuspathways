@@ -87,7 +87,6 @@ const inputStyle = (error?: string): React.CSSProperties => ({
   fontSize: "0.9rem",
   outline: "none",
   transition: "border-color 0.15s ease",
-  appearance: "none" as const,
 });
 
 // ─── Main component ──────────────────────────────────────────────────────────
@@ -126,6 +125,13 @@ export default function YouthOnboardPage() {
 
   function handleDobChange(val: string) {
     update("dob", val);
+    const age = getAge(val);
+    if (age !== null && age >= 15 && age <= 35) {
+      setIsMinor(age < 18);
+    }
+  }
+
+  function checkAgeGate(val: string) {
     const age = getAge(val);
     if (age === null) return;
     if (age < 15) {
@@ -184,7 +190,22 @@ export default function YouthOnboardPage() {
   }
 
   function handleNext() {
-    if (step === 1 && validateStep1()) setStep(2);
+    if (step === 1) {
+      if (form.dob) {
+        const age = getAge(form.dob);
+        if (age !== null) {
+          if (age < 15) {
+            setBlocked(true);
+            return;
+          }
+          if (age > 35) {
+            setTooOld(true);
+            return;
+          }
+        }
+      }
+      if (validateStep1()) setStep(2);
+    }
     if (step === 2 && validateStep2()) setStep(3);
   }
 
@@ -218,9 +239,20 @@ export default function YouthOnboardPage() {
         <p className="max-w-md text-base leading-relaxed mb-8" style={{ color: "var(--muted-foreground)" }}>
           Nexus Pathways is built for youth aged 15 and above. Come back when you&apos;re 15 — we&apos;ll still be here, and the opportunities will be even better.
         </p>
-        <Link href="/" className="btn-primary px-6 py-3 rounded-xl text-sm">
-          ← Back to Homepage
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
+          <button
+            onClick={() => {
+              setBlocked(false);
+              update("dob", "");
+            }}
+            className="btn-primary px-6 py-3 rounded-xl text-sm font-semibold cursor-pointer"
+          >
+            ← Correct Date of Birth
+          </button>
+          <Link href="/" className="px-6 py-3 rounded-xl text-sm font-medium transition-colors hover:underline" style={{ color: "var(--muted-foreground)" }}>
+            Back to Homepage
+          </Link>
+        </div>
       </div>
     );
   }
@@ -308,10 +340,20 @@ export default function YouthOnboardPage() {
         <p className="max-w-sm text-sm leading-relaxed mb-8" style={{ color: "var(--muted-foreground)", opacity: 0.75 }}>
           If you&apos;re looking to mentor, partner, or contribute — our partner programme might be the right fit.
         </p>
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
+          <button
+            onClick={() => {
+              setTooOld(false);
+              update("dob", "");
+            }}
+            className="btn-primary px-6 py-3 rounded-xl text-sm font-semibold cursor-pointer"
+          >
+            ← Correct Date of Birth
+          </button>
           <Link
             href="/onboard/partner"
-            className="btn-primary px-6 py-3 rounded-xl text-sm"
+            className="px-6 py-3 rounded-xl text-sm font-medium transition-colors hover:underline text-primary"
+            style={{ color: "var(--primary)" }}
           >
             Explore Partnership
           </Link>
@@ -373,6 +415,7 @@ export default function YouthOnboardPage() {
               isMinor={isMinor}
               update={update}
               handleDobChange={handleDobChange}
+              checkAgeGate={checkAgeGate}
             />
           )}
           {step === 2 && (
@@ -475,12 +518,14 @@ function Step1({
   isMinor,
   update,
   handleDobChange,
+  checkAgeGate,
 }: {
   form: FormData;
   errors: Record<string, string>;
   isMinor: boolean;
   update: (field: keyof FormData, value: string | boolean) => void;
   handleDobChange: (v: string) => void;
+  checkAgeGate: (v: string) => void;
 }) {
   return (
     <div className="flex flex-col gap-5">
@@ -493,6 +538,7 @@ function Step1({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="First Name *" error={errors.firstName}>
           <input
+            type="text"
             style={inputStyle(errors.firstName)}
             placeholder="e.g. Amara"
             value={form.firstName}
@@ -501,6 +547,7 @@ function Step1({
         </Field>
         <Field label="Surname *" error={errors.surname}>
           <input
+            type="text"
             style={inputStyle(errors.surname)}
             placeholder="e.g. Osei"
             value={form.surname}
@@ -517,10 +564,12 @@ function Step1({
             style={inputStyle(errors.dob)}
             value={form.dob}
             onChange={(e) => handleDobChange(e.target.value)}
+            onBlur={(e) => checkAgeGate(e.target.value)}
           />
         </Field>
         <Field label="ID / Birth Certificate No. *" error={errors.idNumber}>
           <input
+            type="text"
             style={inputStyle(errors.idNumber)}
             placeholder="e.g. 30012345"
             value={form.idNumber}
@@ -545,6 +594,7 @@ function Step1({
         </Field>
         <Field label="City *" error={errors.city}>
           <input
+            type="text"
             style={inputStyle(errors.city)}
             placeholder="e.g. Nairobi"
             value={form.city}

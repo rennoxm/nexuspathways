@@ -27,12 +27,20 @@ function OpportunitiesInner() {
   const [selectedWorkType, setSelectedWorkType] = useState<WorkType | "">("");
   const [paidFilter, setPaidFilter] = useState<"all" | "paid" | "unpaid">("all");
 
-  // Seed search from Hero bar — reads ?q= on first mount
+  // Synchronise state from URL search params on mount or navigation changes
   useEffect(() => {
     const q = searchParams.get("q");
-    if (q) setSearchQuery(q);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setSearchQuery(q || "");
+
+    const cat = searchParams.get("category");
+    if (cat) {
+      const cleanCat = decodeURIComponent(cat.replace(/\+/g, " "));
+      const matched = categories.find((c) => c.toLowerCase() === cleanCat.toLowerCase());
+      setSelectedCategory(matched || "");
+    } else {
+      setSelectedCategory("");
+    }
+  }, [searchParams]);
 
   const filtered = useMemo(() => {
     return opportunities.filter((opp) => {

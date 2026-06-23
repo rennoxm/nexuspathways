@@ -349,4 +349,9 @@
   .btn-shimmer:hover::after {
     animation: shimmer 0.65s ease forwards;
   }
+
+  /* Invert calendar picker icon in dark mode */
+  .dark input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
 }
