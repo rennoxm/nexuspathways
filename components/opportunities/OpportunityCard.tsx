@@ -151,6 +151,7 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
           </button>
         </div>
       ) : (
+        /*
         <a
           href={link}
           target="_blank"
@@ -160,6 +161,8 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
           View Opportunity
           <ExternalLink size={13} />
         </a>
+        */
+        null
       )}
     </div>
   );

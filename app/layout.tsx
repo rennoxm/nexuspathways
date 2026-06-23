@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
@@ -21,16 +20,18 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Theme init runs before paint — prevents flash without going through React render */}
-        <Script id="theme-init" strategy="beforeInteractive">
-          {`
-            (function(){
-              try {
-                var t = localStorage.getItem('theme') || 'dark';
-                document.documentElement.classList.add(t);
-              } catch(e){}
-            })()
-          `}
-        </Script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(){
+                try {
+                  var t = localStorage.getItem('theme') || 'dark';
+                  document.documentElement.classList.add(t);
+                } catch(e){}
+              })()
+            `,
+          }}
+        />
       </head>
       <body className={`${inter.variable} font-sans`}>
         <ThemeProvider
