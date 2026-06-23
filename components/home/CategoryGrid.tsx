@@ -16,10 +16,7 @@ import { useInView } from "@/hooks/useInView";
 import { useAuth } from "@/lib/auth";
 
 const GATED_CATEGORIES = new Set([
-  "Scholarship",
   "Cohort Training",
-  "Fellowship",
-  "Grant & Funding",
 ]);
 
 const iconMap: Record<string, React.ElementType> = {

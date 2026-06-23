@@ -10,10 +10,7 @@ interface OpportunityCardProps {
 
 // Categories that require login to access the apply link
 const GATED_CATEGORIES = new Set([
-  "Scholarship",
   "Cohort Training",
-  "Fellowship",
-  "Grant & Funding",
 ]);
 
 // Maps category to the CSS var key defined in globals.css
