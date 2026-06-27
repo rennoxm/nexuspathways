@@ -59,7 +59,7 @@ export function Footer() {
           <div className="flex flex-col gap-3">
             <h4 className="text-sm font-semibold text-foreground">Contact</h4>
             <ul className="flex flex-col gap-2 text-sm text-muted-foreground leading-relaxed">
-              <li>Nairobi, Kenya · Pan-Africa</li>
+              <li>Nairobi, Kenya · Lagos, Nigeria</li>
               <li>info@nexuspathways.io</li>
             </ul>
           </div>
