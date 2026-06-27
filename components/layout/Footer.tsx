@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MapPin, Mail, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 const footerLinks = {
   Opportunities: [
@@ -34,16 +34,6 @@ export function Footer() {
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
               Promoting the holistic wellbeing of African youth by matching them with trusted and decent opportunities.
             </p>
-            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <MapPin size={13} />
-              <span>Nairobi, Kenya · Pan-Africa</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <Mail size={13} />
-              <a href="mailto:info@nexuspathways.io" className="hover:text-primary transition-colors">
-                info@nexuspathways.io
-              </a>
-            </div>
           </div>
 
           {/* Link cols */}
@@ -64,6 +54,15 @@ export function Footer() {
               </ul>
             </div>
           ))}
+
+          {/* Contact col */}
+          <div className="flex flex-col gap-3">
+            <h4 className="text-sm font-semibold text-foreground">Contact</h4>
+            <ul className="flex flex-col gap-2 text-sm text-muted-foreground leading-relaxed">
+              <li>Nairobi, Kenya · Pan-Africa</li>
+              <li>info@nexuspathways.io</li>
+            </ul>
+          </div>
         </div>
 
         <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3">
