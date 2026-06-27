@@ -61,9 +61,9 @@ export function Hero() {
               animationName: "slideUp" 
             }}
           >
-            Find your next{" "}
+            Master Your{" "}
             <span className="bg-gradient-to-r from-[var(--primary)] via-emerald-400 to-teal-300 bg-clip-text text-transparent drop-shadow-sm">
-              opportunity.
+              Money
             </span>
           </span>
           <span
@@ -75,7 +75,10 @@ export function Hero() {
               animationName: "slideUp" 
             }}
           >
-            Build your future.
+            Build Your
+            <span className="bg-gradient-to-r from-[var(--primary)] via-emerald-400 to-teal-300 bg-clip-text text-transparent drop-shadow-sm">
+              Future.
+            </span>
           </span>
         </h1>
 
@@ -89,7 +92,7 @@ export function Hero() {
             animationName: "slideUp",
           }}
         >
-          We match African youth with vetted scholarships, jobs, fellowships, grants, and training programmes — all in one place.
+          Free financial literacy programs designed for youth aged 18-35. Learn budgeting, saving, investing, and entrepreneurship from trusted organizations.
         </p>
 
         {/* Centered Search Bar */}
