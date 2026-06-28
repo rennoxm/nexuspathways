@@ -6,7 +6,7 @@ import { MessageSquare } from "lucide-react";
 export function FeedbackWidget() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeoDfzHe4nw-EFVA0sAo8SdCoHOcXaP1DTgvh1ict7FtB8dww/viewform";
+  const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSffASmW0lumAoFU3vz7Zd-HNYt6af-NYcAMVQf5g3K0Cs_77A/viewform";
 
   useEffect(() => {
     const handleScroll = () => {
