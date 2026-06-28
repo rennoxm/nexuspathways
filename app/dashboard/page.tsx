@@ -389,7 +389,7 @@ function DashboardInner() {
                   <Sparkles size={12} /> Pro-Tip For Learners
                 </h4>
                 <p className="text-xs leading-relaxed text-muted-foreground">
-                  Submitting a guardian consent email speeds up review gating process for applicants under 18 years. Make sure to double check your onboarding details!
+                  Submitting a guardian consent email speeds up review gating process for applicants under 15 years. Make sure to double check your onboarding details!
                 </p>
               </div>
 

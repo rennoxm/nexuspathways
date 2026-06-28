@@ -92,7 +92,7 @@ export function Hero() {
             animationName: "slideUp",
           }}
         >
-          Free financial literacy programs designed for youth aged 18-35. Learn budgeting, saving, investing, and entrepreneurship from trusted organizations.
+          Free financial literacy programs designed for youth aged 15-35. Learn budgeting, saving, investing, and entrepreneurship from trusted organizations.
         </p>
 
         {/* Centered Search Bar */}

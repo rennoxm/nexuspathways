@@ -127,7 +127,7 @@ export default function YouthOnboardPage() {
     update("dob", val);
     const age = getAge(val);
     if (age !== null && age >= 15 && age <= 35) {
-      setIsMinor(age < 18);
+      setIsMinor(age < 15);
     }
   }
 
@@ -145,7 +145,7 @@ export default function YouthOnboardPage() {
     } else {
       setBlocked(false);
       setTooOld(false);
-      setIsMinor(age < 18);
+      setIsMinor(age < 15);
     }
   }
 
@@ -667,7 +667,7 @@ function Step1({
           <div className="flex items-start gap-3">
             <Info size={16} style={{ color: "var(--primary)", marginTop: 2, flexShrink: 0 }} />
             <p className="text-sm leading-relaxed" style={{ color: "var(--foreground)" }}>
-              You&apos;re joining as a minor (under 18). Please provide a parent or guardian&apos;s email below — they&apos;ll receive a brief consent notification.
+              You&apos;re joining as a minor (under 15). Please provide a parent or guardian&apos;s email below — they&apos;ll receive a brief consent notification.
             </p>
           </div>
           <Field label="Guardian / Parent Email *" error={errors.guardianEmail}>
